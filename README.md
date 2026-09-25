@@ -20,6 +20,12 @@ ekskul-webdev/
 ├── looping/
 │   ├── README.md   ← Materi & penjelasan looping
 │   └── index.js    ← Contoh kode looping
+├── function/
+│   ├── README.md   ← Materi & penjelasan function
+│   └── index.js    ← Contoh kode function
+├── object/
+│   ├── README.md   ← Materi & penjelasan object
+│   └── index.js    ← Contoh kode object
 └── README.md       ← Halaman ini
 ```
 
@@ -92,6 +98,41 @@ Memahami berbagai jenis perulangan untuk menjalankan kode secara efisien dan ber
 
 ---
 
+### 5. ⚙️ [Function (Fungsi)](./function/README.md)
+
+Memahami pembuatan dan penggunaan fungsi sebagai blok kode modular yang dapat digunakan kembali (*reusable*).
+
+**Topik yang dibahas:**
+- **Function Declaration** & mekanisme Hoisting
+- **Function Expression** & fungsi anonim
+- **Arrow Function** (sintaks ringkas & implicit return)
+- **Parameter & Argumen**: Default Parameter & Rest Parameter (`...args`)
+- **Return Value** & pola **Early Return**
+- **Scope & Closure** (variabel privat & lexical scoping)
+- **Higher-Order Function & Callback**
+- **IIFE** (Immediately Invoked Function Expression)
+
+---
+
+### 6. 📦 [Object (Objek)](./object/README.md)
+
+Memahami struktur data objek untuk mengelola kumpulan pasangan key-value dan pemodelan entitas.
+
+**Topik yang dibahas:**
+- Membuat objek dengan **Object Literal** & Object Constructor
+- Mengakses & memodifikasi properti (**Dot Notation** vs **Bracket Notation**)
+- Menambah, mengubah, dan menghapus properti (`delete`)
+- **Method & Kata Kunci `this`**
+- **Nested Object** (Objek bersarang)
+- Pengecekan properti: operator `in` & `Object.hasOwn()`
+- Iterasi objek: `for...in`, `Object.keys()`, `Object.values()`, `Object.entries()`
+- **Destructuring Assignment** & Rename properti
+- **Spread Operator (`...`)** & Salin Objek (**Shallow** vs **Deep Copy** dengan `structuredClone`)
+- Immutability: `Object.freeze()` & `Object.seal()`
+- Fitur Modern: **Optional Chaining (`?.`)** & **Nullish Coalescing (`??`)**
+
+---
+
 ## 🚀 Cara Menjalankan Contoh Kode
 
 Pastikan [Node.js](https://nodejs.org/) telah terpasang di komputer kamu. Kemudian jalankan perintah berikut di terminal:
@@ -108,6 +149,12 @@ node array/index.js
 
 # Menjalankan contoh looping
 node looping/index.js
+
+# Menjalankan contoh function
+node function/index.js
+
+# Menjalankan contoh object
+node object/index.js
 ```
 
 ---
@@ -119,6 +166,7 @@ node looping/index.js
 | [Node.js](https://nodejs.org/) v18+ | Runtime JavaScript |
 | Teks Editor | [VS Code](https://code.visualstudio.com/) (disarankan) |
 | Terminal | PowerShell, CMD, atau Bash |
+| Git | Version Control System |
 
 ---
 
