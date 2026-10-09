@@ -22,10 +22,14 @@ ekskul-webdev/
 │   └── index.js    ← Contoh kode looping
 ├── function/
 │   ├── README.md   ← Materi & penjelasan function
-│   └── index.js    ← Contoh kode function
+│   ├── arrow.js    ← Contoh kode arrow function
+│   ├── index.js    ← Contoh kode function lengkap
+│   └── parameter.js← Contoh kode parameter & argumen
 ├── object/
 │   ├── README.md   ← Materi & penjelasan object
 │   └── index.js    ← Contoh kode object
+├── DOM/
+│   └── README.md   ← Materi & penjelasan Document Object Model
 └── README.md       ← Halaman ini
 ```
 
@@ -133,6 +137,23 @@ Memahami struktur data objek untuk mengelola kumpulan pasangan key-value dan pem
 
 ---
 
+### 7. 🌐 [DOM (Document Object Model)](./DOM/README.md)
+
+Memahami cara browser merepresentasikan dokumen HTML sebagai struktur pohon objek (*DOM Tree*) yang dapat diakses dan dimanipulasi secara interaktif oleh JavaScript.
+
+**Topik yang dibahas:**
+- Pengenalan & Analogi DOM dalam kehidupan nyata
+- Hierarki & Struktur Pohon DOM (**DOM Tree**)
+- Memilih Elemen: `getElementById`, `querySelector`, `querySelectorAll`
+- Mengubah Konten: `textContent` vs `innerHTML`
+- Styling & Kelas: Manipulasi properti `style` dan `classList` (`add`, `remove`, `toggle`)
+- **Event Handling**: Menangkap aksi pengguna dengan `addEventListener`
+- Membuat & Menghapus Elemen Dinamis: `createElement`, `append`, `remove`
+- **Form Handling** & penanganan event submit
+- Mini Proyek Praktik: Counter Interaktif Lengkap
+
+---
+
 ## 🚀 Cara Menjalankan Contoh Kode
 
 Pastikan [Node.js](https://nodejs.org/) telah terpasang di komputer kamu. Kemudian jalankan perintah berikut di terminal:
@@ -152,6 +173,8 @@ node looping/index.js
 
 # Menjalankan contoh function
 node function/index.js
+node function/arrow.js
+node function/parameter.js
 
 # Menjalankan contoh object
 node object/index.js
