@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnapBooth · Sign in</title>
+  <meta name="description" content="Sign in to SnapBooth and continue your photo booth experience." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            snow: '#FFFFFF',
+            petal: '#FFF5F7',
+            dusty: '#E8B7C3',
+            blush: '#F3DDE3',
+            rose: { DEFAULT: '#C77D91', deep: '#B66C80' },
+            ink: '#292529',
+            stone: '#999197',
+            line: '#F0E4E8'
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"DM Sans"', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            soft: '0 24px 60px -24px rgba(199,125,145,.35)',
+            card: '0 10px 30px -12px rgba(41,37,41,.14)'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
+  <style>
+/* SnapBooth · custom styles (Tailwind handles layout + utility) */
+
+:root {
+  --white: #ffffff;
+  --petal: #fff5f7;
+  --dusty: #e8b7c3;
+  --blush: #f3dde3;
+  --rose: #c77d91;
+  --rose-deep: #b66c80;
+  --ink: #292529;
+  --stone: #999197;
+  --line: #f0e4e8;
+  --error: #b5485f;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+html { scroll-behavior: smooth; }
+::selection { background: var(--blush); color: var(--ink); }
+
+/* ---------- Showcase (left) ---------- */
+.showcase { isolation: isolate; }
+
+.floaty {
+  position: absolute;
+  border-radius: 9999px;
+  background: var(--white);
+  opacity: .7;
+  pointer-events: none;
+  animation: drift 14s ease-in-out infinite;
+}
+.floaty-a { width: 11rem; height: 11rem; top: -3rem; right: -3rem; }
+.floaty-b { width: 6rem; height: 6rem; bottom: 18%; left: -2rem; animation-delay: -6s; }
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, 14px, 0); }
+}
+
+.booth {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 30rem;
+  min-height: 24rem;
+}
+
+/* Photo strip — the one memorable element */
+.strip {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: .6rem;
+  width: 8.6rem;
+  padding: .7rem .7rem 2rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: .35rem;
+  box-shadow: 0 30px 60px -28px rgba(199, 125, 145, .5), 0 4px 14px -6px rgba(41, 37, 41, .1);
+  transform: rotate(-3deg);
+  animation: strip-in .9s var(--ease) both;
+}
+.strip-cell {
+  aspect-ratio: 4 / 3.2;
+  overflow: hidden;
+  border-radius: .15rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.strip-cell svg { width: 78%; height: 92%; }
+.strip-mark {
+  position: absolute;
+  inset: auto 0 .5rem 0;
+  text-align: center;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  color: var(--rose);
+}
+
+@keyframes strip-in {
+  from { opacity: 0; transform: translateY(18px) rotate(-6deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-3deg); }
+}
+
+/* Polaroids */
+.polaroid {
+  position: absolute;
+  z-index: 1;
+  width: 9.6rem;
+  padding: .55rem .55rem .4rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: .3rem;
+  box-shadow: 0 18px 36px -20px rgba(41, 37, 41, .28);
+  animation: drift 11s ease-in-out infinite;
+}
+.polaroid .photo {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: .15rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.polaroid .photo svg { width: 80%; height: 92%; }
+.polaroid figcaption {
+  padding: .55rem 0 .15rem;
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.polaroid-left  { left: 0;  top: 12%;  --r: -9deg; transform: rotate(var(--r)); }
+.polaroid-right { right: 0; bottom: 6%; --r: 8deg;  transform: rotate(var(--r)); animation-delay: -5s; }
+
+/* Keep rotation while floating */
+.polaroid { animation-name: drift-rot; }
+@keyframes drift-rot {
+  0%, 100% { transform: translateY(0) rotate(var(--r)); }
+  50%      { transform: translateY(-10px) rotate(var(--r)); }
+}
+
+/* ---------- Form fields ---------- */
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: .85rem;
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+}
+.field:hover { border-color: var(--blush); }
+.field:focus-within {
+  border-color: var(--dusty);
+  box-shadow: 0 0 0 4px rgba(232, 183, 195, .25);
+}
+.field input {
+  flex: 1;
+  min-width: 0;
+  padding: .9rem 1rem .9rem .5rem;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  font-size: .95rem;
+  color: var(--ink);
+}
+.field input::placeholder { color: #c4bcc1; }
+.field-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-left: 1rem;
+  color: var(--stone);
+  flex-shrink: 0;
+  transition: color .25s var(--ease);
+}
+.field:focus-within .field-icon { color: var(--rose); }
+
+.field.is-invalid { border-color: var(--error); background: #fffafb; }
+.field.is-invalid:focus-within { box-shadow: 0 0 0 4px rgba(181, 72, 95, .12); }
+.field.is-valid .field-icon { color: var(--rose); }
+.field.shake { animation: shake .38s var(--ease); }
+
+@keyframes shake {
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.field-msg {
+  min-height: 1.1rem;
+  margin-top: .45rem;
+  font-size: .8rem;
+  line-height: 1.1rem;
+  color: var(--error);
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.field-msg.show { opacity: 1; transform: none; }
+
+.toggle-btn {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: .35rem;
+  border-radius: .6rem;
+  color: var(--stone);
+  transition: color .2s var(--ease), background .2s var(--ease);
+}
+.toggle-btn:hover { color: var(--rose); background: var(--petal); }
+
+/* ---------- Checkbox ---------- */
+.check { display: inline-flex; align-items: center; gap: .6rem; cursor: pointer; user-select: none; }
+.check input { position: absolute; opacity: 0; width: 0; height: 0; }
+.check-box {
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid #e2d3d8;
+  border-radius: .35rem;
+  background: var(--white);
+  color: transparent;
+  transition: all .2s var(--ease);
+}
+.check:hover .check-box { border-color: var(--dusty); }
+.check input:checked + .check-box { background: var(--rose); border-color: var(--rose); color: var(--white); }
+
+/* ---------- Links ---------- */
+.link-rose {
+  color: var(--rose);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size .3s var(--ease), color .2s var(--ease);
+}
+.link-rose:hover { color: var(--rose-deep); background-size: 100% 1px; }
+
+/* ---------- Primary button ---------- */
+.btn-primary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: .95rem 1rem;
+  border-radius: .85rem;
+  background: var(--rose);
+  color: var(--white);
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  box-shadow: 0 14px 28px -14px rgba(199, 125, 145, .85);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+}
+.btn-primary:hover {
+  background: var(--rose-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 18px 32px -14px rgba(199, 125, 145, .95);
+}
+.btn-primary:active { transform: translateY(0) scale(.99); }
+.btn-primary:disabled { cursor: progress; }
+.btn-primary.is-success { background: #8fa88f; box-shadow: 0 14px 28px -14px rgba(143, 168, 143, .8); }
+
+.btn-spinner {
+  position: absolute;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid rgba(255, 255, 255, .45);
+  border-top-color: var(--white);
+  border-radius: 9999px;
+  opacity: 0;
+  animation: spin .7s linear infinite;
+}
+.btn-primary.is-loading .btn-label { opacity: 0; }
+.btn-primary.is-loading .btn-spinner { opacity: 1; }
+.btn-label { transition: opacity .2s var(--ease); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.form-status { min-height: 1.25rem; text-align: center; font-size: .85rem; color: var(--stone); }
+.form-status.is-success { color: #6f896f; }
+
+/* ---------- Focus + accessibility ---------- */
+a:focus-visible, button:focus-visible, .check input:focus-visible + .check-box {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
+  border-radius: .5rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+  /* Compact booth preview on tablet/mobile */
+  .showcase { padding-bottom: 2.5rem; }
+  .booth { min-height: 15rem; max-width: 22rem; }
+  .strip { width: 5.4rem; padding: .45rem .45rem 1.3rem; gap: .35rem; }
+  .strip-mark { font-size: .7rem; bottom: .3rem; }
+  .polaroid { width: 6.4rem; padding: .4rem .4rem .25rem; }
+  .polaroid figcaption { font-size: .8rem; padding-top: .35rem; }
+}
+@media (max-width: 639px) {
+  .booth { min-height: 13rem; }
+  .strip { display: flex; width: auto; padding: .4rem .4rem 1.1rem; gap: .35rem; transform: rotate(-2deg); }
+  .strip-cell { width: 3.4rem; aspect-ratio: 3 / 4; }
+  .strip-cell:nth-child(n+4) { display: none; }
+  .polaroid-left  { top: 6%; }
+  .polaroid-right { bottom: 0; }
+  .floaty-a { width: 7rem; height: 7rem; }
+}
+@media (min-width: 1024px) {
+  .showcase { min-height: 100vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
+
+</style>
+</head>
+
+<body class="bg-snow font-sans text-ink antialiased">
+  <!-- Reusable portrait silhouette used inside photo frames -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <defs>
+      <symbol id="portrait" viewBox="0 0 100 120">
+        <circle cx="50" cy="46" r="17" fill="currentColor" />
+        <path d="M14 120c0-26 16-40 36-40s36 14 36 40z" fill="currentColor" />
+      </symbol>
+      <symbol id="portrait-pair" viewBox="0 0 120 120">
+        <circle cx="42" cy="48" r="15" fill="currentColor" />
+        <path d="M8 120c0-24 14-38 34-38s34 14 34 38z" fill="currentColor" />
+        <circle cx="86" cy="54" r="13" fill="currentColor" opacity=".7" />
+        <path d="M60 120c0-20 11-32 26-32s28 12 28 32z" fill="currentColor" opacity=".7" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="grid min-h-screen lg:grid-cols-2">
+
+    <!-- ============ LEFT · PHOTO BOOTH PREVIEW ============ -->
+    <section class="showcase relative overflow-hidden bg-petal px-6 py-8 sm:px-10 lg:px-14 lg:py-12" aria-labelledby="showcase-title">
+      <div class="floaty floaty-a" aria-hidden="true"></div>
+      <div class="floaty floaty-b" aria-hidden="true"></div>
+
+      <div class="relative z-10 flex h-full flex-col">
+        <a href="#" class="inline-flex items-center gap-2.5 self-start" aria-label="SnapBooth home">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-rose text-white shadow-card">
+            <i data-lucide="aperture" class="h-5 w-5"></i>
+          </span>
+          <span class="font-display text-2xl font-semibold tracking-tight">SnapBooth</span>
+        </a>
+
+        <!-- Booth preview -->
+        <div class="booth-stage my-8 flex flex-1 items-center justify-center lg:my-0" aria-hidden="true">
+          <div class="booth">
+            <!-- Polaroid left -->
+            <figure class="polaroid polaroid-left">
+              <div class="photo bg-blush text-dusty">
+                <svg viewBox="0 0 120 120" class="h-full w-full"><use href="#portrait-pair" /></svg>
+              </div>
+              <figcaption class="font-display">Golden hour</figcaption>
+            </figure>
+
+            <!-- Main photo strip -->
+            <div class="strip">
+              <div class="strip-cell bg-blush text-dusty"><svg viewBox="0 0 100 120"><use href="#portrait" /></svg></div>
+              <div class="strip-cell bg-dusty/60 text-white"><svg viewBox="0 0 100 120"><use href="#portrait" /></svg></div>
+              <div class="strip-cell bg-petal text-dusty"><svg viewBox="0 0 120 120"><use href="#portrait-pair" /></svg></div>
+              <div class="strip-cell bg-rose/70 text-blush"><svg viewBox="0 0 120 120"><use href="#portrait-pair" /></svg></div>
+              <p class="strip-mark font-display">SnapBooth</p>
+            </div>
+
+            <!-- Polaroid right -->
+            <figure class="polaroid polaroid-right">
+              <div class="photo bg-petal text-rose/70">
+                <svg viewBox="0 0 100 120" class="h-full w-full"><use href="#portrait" /></svg>
+              </div>
+              <figcaption class="font-display">Just us</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="max-w-md">
+          <h1 id="showcase-title" class="font-display text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]">
+            Capture Your Beautiful Moments.
+          </h1>
+          <p class="mt-4 text-[15px] leading-relaxed text-stone sm:text-base">
+            Turn your special moments into timeless memories with SnapBooth.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RIGHT · LOGIN FORM ============ -->
+    <section class="flex items-center justify-center px-6 py-12 sm:px-10 lg:px-16" aria-labelledby="login-title">
+      <div class="w-full max-w-[26rem]">
+        <p class="font-display text-xl font-semibold text-rose">SnapBooth</p>
+        <h2 id="login-title" class="mt-3 text-3xl font-semibold tracking-tight sm:text-[2rem]">Welcome Back!</h2>
+        <p class="mt-2 text-[15px] text-stone">Sign in to continue your photo booth experience.</p>
+
+        <form id="loginForm" class="mt-9 space-y-5" novalidate>
+          <!-- Email -->
+          <div>
+            <label for="email" class="mb-2 block text-sm font-medium">Email</label>
+            <div class="field" data-field="email">
+              <i data-lucide="mail" class="field-icon"></i>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+                     placeholder="you@example.com" aria-describedby="email-msg" />
+            </div>
+            <p id="email-msg" class="field-msg" role="alert"></p>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="mb-2 block text-sm font-medium">Password</label>
+            <div class="field" data-field="password">
+              <i data-lucide="lock" class="field-icon"></i>
+              <input id="password" name="password" type="password" autocomplete="current-password"
+                     placeholder="Enter your password" aria-describedby="password-msg" />
+              <button type="button" id="togglePassword" class="toggle-btn" aria-label="Show password" aria-pressed="false">
+                <i data-lucide="eye" class="h-[18px] w-[18px]"></i>
+              </button>
+            </div>
+            <p id="password-msg" class="field-msg" role="alert"></p>
+          </div>
+
+          <!-- Remember / forgot -->
+          <div class="flex items-center justify-between gap-4 text-sm">
+            <label class="check">
+              <input type="checkbox" id="remember" name="remember" />
+              <span class="check-box"><i data-lucide="check" class="h-3 w-3"></i></span>
+              <span class="text-stone">Remember me</span>
+            </label>
+            <a href="#" class="link-rose font-medium">Forgot password?</a>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn-primary">
+            <span class="btn-label">Sign in</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="mt-8 text-center text-sm text-stone">
+          Don't have an account?
+          <a href="#" class="link-rose font-medium">Sign Up</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+/* SnapBooth · login interactions (vanilla JS) */
+(() => {
+  'use strict';
+
+  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const MIN_PASSWORD = 8;
+  const STORAGE_KEY = 'snapbooth:remembered-email';
+
+  const $ = (sel, root = document) => root.querySelector(sel);
+
+  const form = $('#loginForm');
+  const emailInput = $('#email');
+  const passwordInput = $('#password');
+  const rememberInput = $('#remember');
+  const toggleBtn = $('#togglePassword');
+  const submitBtn = $('#submitBtn');
+  const statusEl = $('#formStatus');
+
+  /* ---------- Validators: return an error string, or '' when valid ---------- */
+  const validators = {
+    email(value) {
+      if (!value.trim()) return 'Enter your email address.';
+      if (!EMAIL_PATTERN.test(value.trim())) return 'Enter a valid email, like name@example.com.';
+      return '';
+    },
+    password(value) {
+      if (!value) return 'Enter your password.';
+      if (value.length < MIN_PASSWORD) return `Use at least ${MIN_PASSWORD} characters.`;
+      return '';
+    }
+  };
+
+  /* ---------- Field state helpers ---------- */
+  const fieldWrap = (input) => input.closest('.field');
+  const messageEl = (input) => $(`#${input.id}-msg`);
+
+  function setFieldState(input, error) {
+    const wrap = fieldWrap(input);
+    const msg = messageEl(input);
+
+    wrap.classList.toggle('is-invalid', Boolean(error));
+    wrap.classList.toggle('is-valid', !error && input.value !== '');
+    input.setAttribute('aria-invalid', error ? 'true' : 'false');
+
+    msg.textContent = error;
+    msg.classList.toggle('show', Boolean(error));
+  }
+
+  function validateField(input) {
+    const error = validators[input.name](input.value);
+    setFieldState(input, error);
+    return !error;
+  }
+
+  function shake(input) {
+    const wrap = fieldWrap(input);
+    wrap.classList.remove('shake');
+    void wrap.offsetWidth; // restart animation
+    wrap.classList.add('shake');
+  }
+
+  /* ---------- Status + button states ---------- */
+  function setStatus(text = '', type = '') {
+    statusEl.textContent = text;
+    statusEl.classList.toggle('is-success', type === 'success');
+  }
+
+  function setButtonState(state) {
+    const label = $('.btn-label', submitBtn);
+    submitBtn.classList.toggle('is-loading', state === 'loading');
+    submitBtn.classList.toggle('is-success', state === 'success');
+    submitBtn.disabled = state === 'loading';
+    label.textContent = state === 'success' ? 'Signed in' : 'Sign in';
+  }
+
+  /* ---------- Password visibility ---------- */
+  function togglePassword() {
+    const show = passwordInput.type === 'password';
+    passwordInput.type = show ? 'text' : 'password';
+    toggleBtn.setAttribute('aria-pressed', String(show));
+    toggleBtn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    toggleBtn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="h-[18px] w-[18px]"></i>`;
+    renderIcons();
+    passwordInput.focus();
+  }
+
+  /* ---------- Remember me ---------- */
+  function loadRememberedEmail() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        emailInput.value = saved;
+        rememberInput.checked = true;
+      }
+    } catch (_) { /* storage unavailable */ }
+  }
+
+  function saveRememberedEmail() {
+    try {
+      if (rememberInput.checked) localStorage.setItem(STORAGE_KEY, emailInput.value.trim());
+      else localStorage.removeItem(STORAGE_KEY);
+    } catch (_) { /* storage unavailable */ }
+  }
+
+  /* ---------- Login request (replace with your real API call) ---------- */
+  function requestLogin(/* credentials */) {
+    return new Promise((resolve) => setTimeout(resolve, 1400));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setStatus();
+
+    const results = [emailInput, passwordInput].map((input) => ({ input, ok: validateField(input) }));
+    const firstInvalid = results.find((r) => !r.ok);
+
+    if (firstInvalid) {
+      results.filter((r) => !r.ok).forEach((r) => shake(r.input));
+      firstInvalid.input.focus();
+      return;
+    }
+
+    setButtonState('loading');
+    try {
+      await requestLogin({ email: emailInput.value.trim(), password: passwordInput.value });
+      saveRememberedEmail();
+      setButtonState('success');
+      setStatus('Welcome back. Taking you to your studio…', 'success');
+    } catch (_) {
+      setButtonState('idle');
+      setStatus('We could not sign you in. Check your details and try again.');
+    }
+  }
+
+  /* ---------- Icons ---------- */
+  function renderIcons() {
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  /* ---------- Init ---------- */
+  function init() {
+    loadRememberedEmail();
+    renderIcons();
+
+    toggleBtn.addEventListener('click', togglePassword);
+    form.addEventListener('submit', handleSubmit);
+
+    // Validate on blur, then re-validate live once a field has been flagged
+    [emailInput, passwordInput].forEach((input) => {
+      input.addEventListener('blur', () => { if (input.value || fieldWrap(input).classList.contains('is-invalid')) validateField(input); });
+      input.addEventListener('input', () => {
+        if (fieldWrap(input).classList.contains('is-invalid')) validateField(input);
+        setStatus();
+        if (submitBtn.classList.contains('is-success')) setButtonState('idle');
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+
+</script>
+</body>
+</html>
