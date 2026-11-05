@@ -1,0 +1,474 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf8f9">
+  <meta name="description" content="Create your account and get ready for a little photobooth magic.">
+  <title>Join the Snap Club</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #3b3038;
+      --muted: #867b83;
+      --pink: #f0b5ca;
+      --pink-dark: #bd7892;
+      --line: #eee4e9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      padding: 38px 20px;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 12% 10%, #fff0f5 0, transparent 30%),
+        #faf8f9;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    button, input { font: inherit; }
+
+    .page {
+      position: relative;
+      width: min(100%, 1020px);
+      min-height: 600px;
+      display: grid;
+      grid-template-columns: 1fr 0.94fr;
+      align-items: center;
+      gap: clamp(26px, 5vw, 58px);
+      padding: 24px;
+      border: 1px solid #f0e9ed;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 18px 54px rgba(87, 55, 72, 0.08);
+    }
+
+    .intro {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 540px;
+      padding: 48px 36px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #fff1f6, #fff8f9 80%);
+      isolation: isolate;
+    }
+
+    .intro::before,
+    .intro::after {
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    .intro::before {
+      top: 11%;
+      right: 9%;
+      width: 84px;
+      height: 84px;
+      border: 1px solid rgba(214, 148, 174, 0.25);
+      animation: drift 9s ease-in-out infinite;
+    }
+
+    .intro::after {
+      bottom: 13%;
+      left: 10%;
+      width: 17px;
+      height: 17px;
+      background: rgba(232, 183, 203, 0.55);
+      animation: drift 7s ease-in-out infinite reverse;
+    }
+
+    .brand {
+      position: absolute;
+      top: 30px;
+      left: 32px;
+      color: var(--pink-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .brand span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--pink);
+      vertical-align: 1px;
+    }
+
+    .polaroid {
+      position: relative;
+      z-index: 1;
+      width: 190px;
+      margin: 12px auto 30px;
+      padding: 9px 9px 14px;
+      border: 1px solid #f0e6eb;
+      border-radius: 6px;
+      transform: rotate(-4deg);
+      background: #fff;
+      box-shadow: 0 12px 26px rgba(109, 66, 88, 0.13);
+      animation: bob 6s ease-in-out infinite;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .polaroid:hover {
+      animation-play-state: paused;
+      transform: rotate(-1deg) translateY(-4px);
+      box-shadow: 0 16px 30px rgba(109, 66, 88, 0.17);
+    }
+
+    .photo {
+      height: 148px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 5px;
+      background:
+        radial-gradient(circle at 50% 35%, #fffafc 0 17%, transparent 17.5%),
+        radial-gradient(ellipse at 50% 118%, #efd0dd 0 45%, transparent 45.5%),
+        linear-gradient(145deg, #f8e9ee, #eee8f0);
+      color: #a5798c;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .polaroid-caption {
+      padding-top: 10px;
+      color: #9a8791;
+      font-family: Georgia, serif;
+      font-size: 11px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .intro-copy { position: relative; z-index: 1; text-align: center; }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--pink-dark);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 330px;
+      margin: 0 auto 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 34px);
+      font-weight: 500;
+      line-height: 1.18;
+    }
+
+    .intro-copy p:last-child {
+      max-width: 285px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .form-side {
+      display: flex;
+      align-items: center;
+      padding: 38px clamp(12px, 2vw, 24px);
+    }
+
+    .form-wrap {
+      width: 100%;
+      max-width: 390px;
+      margin: auto;
+      animation: arrive 600ms both;
+    }
+
+    .form-heading {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    .form-subtitle {
+      margin: 0 0 27px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .password-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .password-row input { min-width: 0; }
+
+    .show-password {
+      flex: 0 0 auto;
+      padding: 10px 2px;
+      border: 0;
+      background: transparent;
+      color: var(--pink-dark);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .show-password:focus-visible {
+      border-radius: 4px;
+      outline: 2px solid var(--pink);
+      outline-offset: 3px;
+    }
+
+    .strength {
+      height: 4px;
+      margin-top: 9px;
+      overflow: hidden;
+      border-radius: 9px;
+      background: #f3ebef;
+    }
+
+    .strength-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #e3a9c0;
+      transition: width 220ms ease, background-color 220ms ease;
+    }
+
+    .strength-label {
+      min-height: 14px;
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      height: 47px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      background: #fffdfd;
+      color: var(--ink);
+      font-size: 13px;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    input::placeholder { color: #b7aab2; }
+    input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(240, 181, 202, 0.22); }
+
+    .password-hint { margin: 6px 0 0; color: var(--muted); font-size: 11px; }
+
+    .error {
+      min-height: 18px;
+      margin: -4px 0 8px;
+      color: #b73f68;
+      font-size: 12px;
+    }
+
+    .submit {
+      width: 100%;
+      min-height: 49px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 6px;
+      border: 0;
+      border-radius: 11px;
+      background: #efb6cc;
+      box-shadow: 0 7px 16px rgba(191, 111, 145, 0.18);
+      color: #543744;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    .submit:hover { transform: translateY(-2px); background: #eaa8c1; box-shadow: 0 10px 20px rgba(191, 111, 145, 0.22); }
+    .submit:focus-visible { outline: 3px solid #f4d2df; outline-offset: 3px; }
+    .submit:active { transform: translateY(0) scale(0.99); }
+
+    .terms {
+      margin: 15px 4px 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-6px) rotate(-2deg); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(8px, -10px); }
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 18px 14px; }
+      .page { max-width: 500px; grid-template-columns: 1fr; gap: 10px; padding: 12px; }
+      .intro {
+        min-height: 370px;
+        padding: 58px 25px 28px;
+        border-radius: 16px;
+      }
+      .brand { top: 22px; left: 22px; }
+      .polaroid { width: 145px; margin: 6px auto 20px; padding: 7px 7px 10px; }
+      .photo { height: 110px; }
+      .polaroid-caption { padding-top: 8px; }
+      h1 { font-size: 29px; }
+      .intro-copy p:last-child { font-size: 12px; }
+      .form-side { padding: 20px 16px 24px; }
+      .form-heading { font-size: 26px; }
+      .form-subtitle { margin-bottom: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="intro" aria-labelledby="welcome-heading">
+      <div class="brand"><span aria-hidden="true"></span> SNAP CLUB</div>
+      <div class="polaroid" aria-hidden="true">
+        <div class="photo"></div>
+        <div class="polaroid-caption">Captured just for you</div>
+      </div>
+      <div class="intro-copy">
+        <p class="eyebrow">A photobooth, your way</p>
+        <h1 id="welcome-heading">Make a moment worth keeping.</h1>
+        <p>Sign up, step in, and save a photo you’ll want to look back on.</p>
+      </div>
+    </section>
+
+    <section class="form-side" aria-labelledby="form-heading">
+      <div class="form-wrap">
+        <h2 class="form-heading" id="form-heading">Create your account</h2>
+        <p class="form-subtitle">A few details, then you’re ready for the photobooth.</p>
+        <form id="register-form">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="What should we call you?" required>
+          </div>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="password">Create a password</label>
+            <div class="password-row">
+              <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+              <button class="show-password" type="button" aria-controls="password" aria-pressed="false">Show</button>
+            </div>
+            <div class="strength" aria-hidden="true"><div class="strength-fill" id="strength-fill"></div></div>
+            <p class="strength-label" id="strength-label" aria-live="polite">Use 8 or more characters.</p>
+          </div>
+          <div class="field">
+            <label for="confirm-password">Confirm your password</label>
+            <div class="password-row">
+              <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="8" placeholder="Type it one more time" required>
+              <button class="show-password" type="button" aria-controls="confirm-password" aria-pressed="false">Show</button>
+            </div>
+          </div>
+          <p class="error" id="form-error" role="alert" aria-live="polite"></p>
+          <button class="submit" type="submit">Continue to photobooth <span aria-hidden="true">&rarr;</span></button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector("#register-form");
+    const password = document.querySelector("#password");
+    const confirmPassword = document.querySelector("#confirm-password");
+    const error = document.querySelector("#form-error");
+    const strengthFill = document.querySelector("#strength-fill");
+    const strengthLabel = document.querySelector("#strength-label");
+
+    document.querySelectorAll(".show-password").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.getAttribute("aria-controls"));
+        const isVisible = input.type === "text";
+        input.type = isVisible ? "password" : "text";
+        button.textContent = isVisible ? "Show" : "Hide";
+        button.setAttribute("aria-pressed", String(!isVisible));
+      });
+    });
+
+    password.addEventListener("input", () => {
+      const value = password.value;
+      const score = [
+        value.length >= 8,
+        /[A-Z]/.test(value) && /[a-z]/.test(value),
+        /\d/.test(value),
+        /[^A-Za-z0-9]/.test(value)
+      ].filter(Boolean).length;
+      const labels = ["Use 8 or more characters.", "A little stronger", "Getting stronger", "Nice and strong!", "Super strong!"];
+      const colors = ["#f5eaf0", "#f4c7d9", "#f0b3ce", "#e995b8", "#db80a8"];
+
+      strengthFill.style.width = `${score * 25}%`;
+      strengthFill.style.backgroundColor = colors[score];
+      strengthLabel.textContent = value ? labels[score] : labels[0];
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (password.value !== confirmPassword.value) {
+        error.textContent = "Those passwords don't match yet. Please check them.";
+        confirmPassword.setAttribute("aria-invalid", "true");
+        confirmPassword.focus();
+        return;
+      }
+
+      error.textContent = "";
+      confirmPassword.removeAttribute("aria-invalid");
+      window.location.assign("photobooth.html");
+    });
+
+    confirmPassword.addEventListener("input", () => {
+      error.textContent = "";
+      confirmPassword.removeAttribute("aria-invalid");
+    });
+  </script>
+</body>
+</html>
