@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photobooth - Beranda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="landing.css">
+</head>
+
+<body>
+
+    <!-- ===== BAR ATAS ===== -->
+    <header class="bar-atas">
+        <a href="#" class="logo">Pinkbooth</a>
+        <nav class="menu">
+            <a href="#" class="aktif">Beranda</a>
+            <a href="#bingkai">Bingkai</a>
+            <a href="#galeri">Galeri</a>
+        </nav>
+        <div class="akun">
+            <span class="akun-nama">Hai, Nama Kamu</span>
+            <a href="login.html" class="tombol-keluar">Keluar</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ===== BAGIAN UTAMA ===== -->
+        <section class="hero">
+            <div class="hero-teks">
+                <h1>Siap bergaya hari ini?</h1>
+                <p>Pilih bingkai, berpose di depan kamera, dan dapatkan satu strip foto lucu dalam hitungan detik.</p>
+                <div class="hero-tombol">
+                    <a href="booth.html" class="tombol tombol-utama">Mulai foto</a>
+                    <a href="#galeri" class="tombol tombol-tipis">Lihat galeri</a>
+                </div>
+            </div>
+
+            <!-- strip foto dibuat dari CSS, tidak perlu gambar -->
+            <div class="strip-wadah" aria-hidden="true">
+                <div class="strip">
+                    <div class="bingkai-foto f1"></div>
+                    <div class="bingkai-foto f2"></div>
+                    <div class="bingkai-foto f3"></div>
+                    <div class="bingkai-foto f4"></div>
+                    <span class="strip-tulisan">pinkbooth</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LANGKAH ===== -->
+        <section class="langkah">
+            <h2>Tiga langkah saja</h2>
+            <ol class="langkah-daftar">
+                <li>
+                    <span class="langkah-nomor">1</span>
+                    <h3>Pilih bingkai</h3>
+                    <p>Ada banyak warna dan gaya yang bisa dipilih.</p>
+                </li>
+                <li>
+                    <span class="langkah-nomor">2</span>
+                    <h3>Berpose</h3>
+                    <p>Kamera mengambil empat foto, kamu tinggal tersenyum.</p>
+                </li>
+                <li>
+                    <span class="langkah-nomor">3</span>
+                    <h3>Simpan hasilnya</h3>
+                    <p>Unduh strip fotomu atau bagikan ke teman.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ===== PROMOSI STRIP (hanya tampilan, tidak bisa diklik) ===== -->
+        <section class="bingkai" id="bingkai">
+            <h2>Banyak pilihan strip dan warna</h2>
+            <p class="bingkai-ket">Strip 2, 3, atau 4 foto, dengan warna pink, kuning, dan hitam.</p>
+
+            <div class="pamer">
+                <div class="pamer-item warna-pink">
+                    <div class="strip-mini">
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <span class="strip-merek">pinkbooth</span>
+                    </div>
+                    <p class="pamer-label"><strong>2 strip</strong>Pink</p>
+                </div>
+
+                <div class="pamer-item warna-kuning">
+                    <div class="strip-mini">
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <span class="strip-merek">pinkbooth</span>
+                    </div>
+                    <p class="pamer-label"><strong>3 strip</strong>Kuning</p>
+                </div>
+
+                <div class="pamer-item warna-hitam">
+                    <div class="strip-mini">
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <span class="strip-merek">pinkbooth</span>
+                    </div>
+                    <p class="pamer-label"><strong>4 strip</strong>Hitam</p>
+                </div>
+
+                <div class="pamer-item warna-pink">
+                    <div class="strip-mini">
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <span class="strip-merek">pinkbooth</span>
+                    </div>
+                    <p class="pamer-label"><strong>4 strip</strong>Pink</p>
+                </div>
+
+                <div class="pamer-item warna-hitam">
+                    <div class="strip-mini">
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <span class="strip-merek">pinkbooth</span>
+                    </div>
+                    <p class="pamer-label"><strong>3 strip</strong>Hitam</p>
+                </div>
+
+                <div class="pamer-item warna-kuning">
+                    <div class="strip-mini">
+                        <div class="foto"></div>
+                        <div class="foto"></div>
+                        <span class="strip-merek">pinkbooth</span>
+                    </div>
+                    <p class="pamer-label"><strong>2 strip</strong>Kuning</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== GALERI ===== -->
+        <section class="galeri" id="galeri">
+            <h2>Foto terakhirmu</h2>
+            <!-- Kalau belum ada foto, tampilkan kotak kosong ini -->
+            <div class="galeri-kosong">
+                <p>Belum ada foto. Yuk ambil strip pertamamu!</p>
+                <a href="booth.html" class="tombol tombol-utama">Mulai foto</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="kaki">
+        <p>Pinkbooth &copy; 2026</p>
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+/* ===== WARNA (ubah di sini kalau mau ganti nuansa) ===== */
+:root {
+  --pink-susu: #fff0f5;
+  --pink-muda: #ffd6e6;
+  --pink-sedang: #ff9ec4;
+  --pink-tua: #e0457f;
+  --anggur: #5a1f3a;
+  --putih: #ffffff;
+
+  --font-judul: "Bagel Fat One", "Trebuchet MS", sans-serif;
+  --font-isi: "Nunito", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-isi);
+  color: var(--anggur);
+  background: var(--pink-susu);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+.tombol:focus-visible {
+  outline: 3px solid var(--anggur);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-judul);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+/* ===== BAR ATAS ===== */
+.bar-atas {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 40px;
+  background: var(--putih);
+  border-bottom: 3px solid var(--pink-muda);
+}
+
+.logo {
+  font-family: var(--font-judul);
+  font-size: 1.6rem;
+  color: var(--pink-tua);
+}
+
+.menu {
+  display: flex;
+  gap: 8px;
+}
+
+.menu a {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.menu a:hover {
+  background: var(--pink-muda);
+}
+
+.menu a.aktif {
+  background: var(--pink-tua);
+  color: var(--putih);
+}
+
+.akun {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.akun-nama {
+  font-weight: 800;
+}
+
+.tombol-keluar {
+  padding: 8px 16px;
+  border: 2px solid var(--pink-tua);
+  border-radius: 999px;
+  color: var(--pink-tua);
+  font-weight: 800;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.tombol-keluar:hover {
+  background: var(--pink-tua);
+  color: var(--putih);
+}
+
+/* ===== TOMBOL ===== */
+.tombol {
+  display: inline-block;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+.tombol-utama {
+  background: var(--pink-tua);
+  color: var(--putih);
+  box-shadow: 0 5px 0 var(--anggur);
+}
+
+.tombol-utama:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--anggur);
+}
+
+.tombol-tipis {
+  border: 2px solid var(--anggur);
+}
+
+.tombol-tipis:hover {
+  background: var(--pink-muda);
+}
+
+/* ===== BAGIAN UTAMA (HERO) ===== */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 70px 40px;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  color: var(--pink-tua);
+  margin-bottom: 18px;
+}
+
+.hero-teks p {
+  max-width: 46ch;
+  font-size: 1.15rem;
+  margin-bottom: 30px;
+}
+
+.hero-tombol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ===== STRIP FOTO ===== */
+.strip-wadah {
+  display: flex;
+  justify-content: center;
+}
+
+.strip {
+  width: 190px;
+  padding: 16px 16px 40px;
+  background: var(--putih);
+  border-radius: 10px;
+  box-shadow: 8px 10px 0 var(--pink-sedang);
+  transform: rotate(5deg);
+  position: relative;
+}
+
+.bingkai-foto {
+  height: 118px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+}
+
+.f1 {
+  background: linear-gradient(135deg, #ffb3d1, #ff7eb0);
+}
+.f2 {
+  background: linear-gradient(135deg, #ffd6e6, #ffa6c9);
+}
+.f3 {
+  background: linear-gradient(135deg, #ff9ec4, #e0457f);
+}
+.f4 {
+  background: linear-gradient(135deg, #ffe3ee, #ffb3d1);
+}
+
+.strip-tulisan {
+  position: absolute;
+  bottom: 11px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-judul);
+  color: var(--pink-tua);
+  font-size: 1rem;
+}
+
+/* ===== LANGKAH ===== */
+.langkah,
+.bingkai,
+.galeri {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 40px 50px;
+}
+
+.langkah h2,
+.bingkai h2,
+.galeri h2 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+.langkah-daftar {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.langkah-daftar li {
+  padding: 24px;
+  background: var(--putih);
+  border-radius: 20px;
+  border: 3px solid var(--pink-muda);
+}
+
+.langkah-nomor {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  background: var(--pink-tua);
+  color: var(--putih);
+  font-family: var(--font-judul);
+}
+
+.langkah-daftar h3 {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+/* ===== PROMOSI STRIP ===== */
+.bingkai-ket {
+  margin: -12px 0 28px;
+  font-size: 1.1rem;
+}
+
+/* warna strip: dipakai lewat variabel */
+.warna-pink {
+  --kertas: #ff9ec4;
+  --foto: #ffe3ee;
+  --tulisan: #5a1f3a;
+}
+
+.warna-kuning {
+  --kertas: #ffd84d;
+  --foto: #fff6cc;
+  --tulisan: #1c1c1c;
+}
+
+.warna-hitam {
+  --kertas: #1c1c1c;
+  --foto: #4a4a4a;
+  --tulisan: #ffd84d;
+}
+
+.pamer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 36px 34px;
+  padding: 44px 24px 34px;
+  background: var(--pink-muda);
+  border-radius: 28px;
+}
+
+.pamer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.pamer-item:nth-child(1) .strip-mini {
+  transform: rotate(-4deg);
+}
+.pamer-item:nth-child(2) .strip-mini {
+  transform: rotate(3deg);
+}
+.pamer-item:nth-child(3) .strip-mini {
+  transform: rotate(-2deg);
+}
+.pamer-item:nth-child(4) .strip-mini {
+  transform: rotate(4deg);
+}
+.pamer-item:nth-child(5) .strip-mini {
+  transform: rotate(-3deg);
+}
+.pamer-item:nth-child(6) .strip-mini {
+  transform: rotate(2deg);
+}
+
+.strip-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 120px;
+  height: 300px;
+  padding: 12px 12px 34px;
+  background: var(--kertas);
+  border-radius: 8px;
+  box-shadow: 5px 6px 0 rgba(90, 31, 58, 0.25);
+  position: relative;
+}
+
+.strip-mini .foto {
+  flex: 1;
+  background: var(--foto);
+  border-radius: 4px;
+}
+
+.strip-merek {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-judul);
+  font-size: 0.85rem;
+  color: var(--tulisan);
+}
+
+.pamer-label {
+  text-align: center;
+  line-height: 1.3;
+}
+
+.pamer-label strong {
+  display: block;
+  font-weight: 800;
+}
+
+/* ===== GALERI ===== */
+.galeri-kosong {
+  padding: 44px 20px;
+  text-align: center;
+  background: var(--putih);
+  border: 3px dashed var(--pink-sedang);
+  border-radius: 24px;
+}
+
+.galeri-kosong p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+/* ===== KAKI HALAMAN ===== */
+.kaki {
+  padding: 24px;
+  text-align: center;
+  background: var(--pink-muda);
+  font-weight: 600;
+}
+
+/* ===== TAMPILAN HP & TABLET ===== */
+@media (max-width: 860px) {
+  .bar-atas {
+    flex-wrap: wrap;
+    padding: 12px 20px;
+  }
+
+  .menu {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .hero-teks p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-tombol {
+    justify-content: center;
+  }
+
+  .langkah,
+  .bingkai,
+  .galeri {
+    padding: 24px 20px 40px;
+  }
+
+  .langkah-daftar {
+    grid-template-columns: 1fr;
+  }
+
+  .pamer {
+    gap: 28px 16px;
+    padding: 32px 12px 26px;
+  }
+
+  .strip-mini {
+    width: 84px;
+    height: 220px;
+    padding: 8px 8px 28px;
+    gap: 6px;
+  }
+
+  .pamer-item {
+    width: 96px;
+  }
+}
+
+@media (max-width: 480px) {
+  .akun-nama {
+    display: none;
+  }
+}
+
+/* Hormati pengguna yang mematikan gerakan */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
